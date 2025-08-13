@@ -13,3 +13,13 @@ class Category(Timestamped):
     slug = models.SlugField(max_length=120, unique=True)
     def __str__(self):
         return self.name
+    
+class Order(Timestamped):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('CONFIRMED', 'Confirmed'),
+        ('PREPARING', 'Preparing'),
+        ('READY', 'Ready'),
+        ('COMPLETED', 'Completed'),
+        ('CANCELLED', 'Cancelled'),
+    ]
