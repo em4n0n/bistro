@@ -23,3 +23,9 @@ class Order(Timestamped):
         ('COMPLETED', 'Completed'),
         ('CANCELLED', 'Cancelled'),
     ]
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    customer_name = models.CharField(max_length=120)
+    customer_phone = models.CharField(max_length=40, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    notes = models.TextField(blank=True)
