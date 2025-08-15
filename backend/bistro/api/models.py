@@ -13,7 +13,16 @@ class Category(Timestamped):
     slug = models.SlugField(max_length=120, unique=True)
     def __str__(self):
         return self.name
-    
+
+class MenuItem(Timestamped):
+    category = models.ForeignKey(Category, related_name='items', on_delete=models.PROTECT)
+    name = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+    price_cents = models.PositiveIntegerField()
+    is_available = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='menu/', blank=True, null=True)
+    def __str__(self):
+        return self.name    
 class Order(Timestamped):
     STATUS_CHOICES = [
         ('PENDING', 'Pending'),
@@ -36,3 +45,4 @@ class Order(Timestamped):
 
     def __str__(self):
         return f"Order #{self.id} — {self.status}"
+    
