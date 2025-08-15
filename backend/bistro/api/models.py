@@ -29,3 +29,10 @@ class Order(Timestamped):
     customer_phone = models.CharField(max_length=40, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
     notes = models.TextField(blank=True)
+    
+    @property
+    def total_cents(self):
+        return sum(item.subtotal_cents for item in self.items.all())
+
+    def __str__(self):
+        return f"Order #{self.id} — {self.status}"
