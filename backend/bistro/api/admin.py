@@ -11,3 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "price_cents", "is_available")
     list_filter = ("category", "is_available")
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
