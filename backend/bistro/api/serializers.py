@@ -25,3 +25,26 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ["id", "menu_item", "menu_item_id", "quantity", "price_cents", "subtotal_cents"]
+        
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+    total_cents = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ["id", "customer_name", "customer_phone", "status", "notes", "items", "total_cents", "created_at"]
+        read_only_fields = ["status", "created_at"]
+
+    def create(self, validated_data):
+        items_data = validated_data.pop("items", [])
+        user = self.context["request"].user if self.context["request"].user.is_authenticated else None
+        order = Order.objects.create(user=user, **validated_data)
+        for item in items_data:
+            menu_item = item["menu_item"]
+            OrderItem.objects.create(
+                order=order,
+                menu_item=menu_item,
+                quantity=item.get("quantity", 1),
+                price_cents=item.get("price_cents", menu_item.price_cents),
+            )
+        return order
