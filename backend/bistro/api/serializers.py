@@ -14,3 +14,14 @@ class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
         fields = ["id", "name", "description", "price_cents", "is_available", "image", "category", "category_id"]
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    menu_item = MenuItemSerializer(read_only=True)
+    menu_item_id = serializers.PrimaryKeyRelatedField(
+        source="menu_item", queryset=MenuItem.objects.all(), write_only=True
+    )
+    subtotal_cents = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ["id", "menu_item", "menu_item_id", "quantity", "price_cents", "subtotal_cents"]
