@@ -15,7 +15,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     
 class MenuItemViewSet(viewsets.ModelViewSet):
-    queryset = MenuItem.objects.filter(is_availabe=True).select_related('category').order_by('name')
+    queryset = MenuItem.objects.filter(is_available=True).select_related('category').order_by('name')
     serializer_class = MenuItemSerializer
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
