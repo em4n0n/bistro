@@ -8,3 +8,8 @@ from .serializers import CategorySerializer, MenuItemSerializer, OrderSerializer
 from .permissions import IsAdminOrReadOnly
 
 # Create your views here.
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all().order_by('name')
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdminOrReadOnly]
