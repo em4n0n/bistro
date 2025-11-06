@@ -10,3 +10,9 @@ API.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config
 })
+
+export const login = async (username, password) => {
+  const { data } = await axios.post('http://127.0.0.1:8000/api/auth/token/', { username, password })
+  localStorage.setItem('access', data.access)
+  localStorage.setItem('refresh', data.refresh)
+}
