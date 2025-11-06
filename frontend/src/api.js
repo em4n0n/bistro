@@ -21,3 +21,8 @@ export const fetchMenu = async (q = '') => {
   const { data } = await API.get('menu/', { params: q ? { search: q } : {} })
   return data
 }
+
+export const createOrder = async (payload) => {
+  const { data } = await API.post('orders/', payload)
+  return data
+}
