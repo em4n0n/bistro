@@ -16,3 +16,8 @@ export const login = async (username, password) => {
   localStorage.setItem('access', data.access)
   localStorage.setItem('refresh', data.refresh)
 }
+
+export const fetchMenu = async (q = '') => {
+  const { data } = await API.get('menu/', { params: q ? { search: q } : {} })
+  return data
+}
