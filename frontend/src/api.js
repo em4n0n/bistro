@@ -31,3 +31,8 @@ export const fetchOrders = async () => {
   const { data } = await API.get('orders/')
   return data
 }
+
+export const setOrderStatus = async (id, status) => {
+  const { data } = await API.post(`orders/${id}/set_status/`, { status })
+  return data
+}
